@@ -232,8 +232,8 @@ public class ForwardController {
      */
     @GetMapping(value = "/getXList")
     public ResponseInfo getSum(String openId,String type,String month){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        System.out.println("開始時間"+df.format(new Date()));// new Date()为获取当前系统时间
+       /* SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        System.out.println("開始時間"+df.format(new Date()));// new Date()为获取当前系统时间*/
         if(openId == null || "".equals(openId)){
             return new ResponseInfo(InfoEnum.NO_OPENID,-1);
         }
@@ -246,8 +246,8 @@ public class ForwardController {
         if(result.equals("-1")){
             return new ResponseInfo(InfoEnum.NET_ERROR,"网络异常，请检查网络后重试！");
         }else{
-            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-            System.out.println("查詢列表結束時間"+df2.format(new Date()));// new Date()为获取当前系统时间
+         /*   SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            System.out.println("查詢列表結束時間"+df2.format(new Date()));// new Date()为获取当前系统时间*/
             return new ResponseInfo(InfoEnum.SUCCESS,result);
         }
     }

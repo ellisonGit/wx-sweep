@@ -221,8 +221,8 @@ public class HnjcaController {
 
         String responeJsonStr = "{\"button\" : [" +
                     "{\"name\":\"关于本公司\",\"sub_button\":[{\"type\":\"view\",\"name\":\"联系我们\",\"url\":\"http://www.hnjca.cn/Home/List/58/1\"},{\"type\":\"view\",\"name\":\"项目案例\",\"url\":\"http://www.hnjca.cn/Home/List/3/1\"},{\"type\":\"view\",\"name\":\"产品中心\",\"url\":\"http://www.hnjca.cn/Home/List/1/1\"},{\"type\":\"view\",\"name\":\"公司简介\",\"url\":\"http://www.hnjca.cn/Home/List/53/1\"}]}," +
-                "{\"name\":\"微平台\",\"sub_button\":[{\"type\":\"view\",\"name\":\"订餐服务\",\"url\":\"http://www.130xxxx5088.com/test/inTesting.html\"},{\"type\":\"view\",\"name\":\"微信充值\",\"url\":\"http://www.130xxxx5088.com/test/inTesting.html\"},{\"type\":\"view\",\"name\":\"一卡通矩阵\",\"url\":\"http://www.130xxxx5088.com/test/juzhen.html\"},{\"type\":\"view\",\"name\":\"账户信息\",\"url\":\"http://www.130xxxx5088.com/test/info_1.html\"}]}," +
-                "{\"name\":\"使用帮助\",\"sub_button\":[{\"type\":\"click\",\"name\":\"操作说明\",\"key\":\"click_key1\"},{\"type\":\"view\",\"name\":\"账户认证\",\"url\":\"http://www.130xxxx5088.com/test/banding.html\"}]}" +
+                "{\"name\":\"微平台\",\"sub_button\":[{\"type\":\"view\",\"name\":\"订餐服务\",\"url\":\"http://www.130xxxx5088.com/test/inTesting.html\"},{\"type\":\"view\",\"name\":\"微信充值\",\"url\":\"http://llison.viphk.ngrok.org/api/wxPay.html\"},{\"type\":\"view\",\"name\":\"一卡通矩阵\",\"url\":\"http://llison.viphk.ngrok.org/api/info_1.html?t=2\"},{\"type\":\"view\",\"name\":\"账户信息\",\"url\":\"http://llison.viphk.ngrok.org/api/info_1.html\"}]}," +
+                "{\"name\":\"使用帮助\",\"sub_button\":[{\"type\":\"click\",\"name\":\"操作说明\",\"key\":\"click_key1\"},{\"type\":\"view\",\"name\":\"账户认证\",\"url\":\"http://llison.viphk.ngrok.org/api/banding.html\"}]}" +
                 "]}";
 
         System.out.println(responeJsonStr);

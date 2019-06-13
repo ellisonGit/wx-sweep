@@ -69,24 +69,7 @@ $(function(){
 	});
 
 
-	//查询用户详细信息
-	function loadUserInfo(){
-		var url = "/api/forward/queryCardInfo";
-		$.ajax({
-			async: true,
-			url: url,
-			data:{
-				openId:openId
-			},
-			type:'GET',
-			success:function(data){
-				var result = JSON.parse(data.data);
-				JobNo=result.data.jobNo;
-				$("#text1").html("工号:"+JobNo);
-			}
-		});
-	}
-	loadUserInfo();
+
 
 
 
@@ -186,7 +169,7 @@ $(function(){
 			success:function(data){
 				var result = JSON.parse(data.data);
 				//  alert(result);
-				if(result.data=="-1"){
+				if(result=="-1"){
 					//window.location.href=Url_+"/api/hnjca/auth?returnUrl="+Url_+"/api/wxPay.html";
 					window.location.href=Url_+"/api/hnjca/auth?returnUrl="+Url_+"/api/banding.html";
 
@@ -197,4 +180,23 @@ $(function(){
 
 	}
 	validateBind();
+
+	//查询用户详细信息
+	function loadUserInfo(){
+		var url = "/api/forward/queryCardInfo";
+		$.ajax({
+			async: true,
+			url: url,
+			data:{
+				openId:openId
+			},
+			type:'GET',
+			success:function(data){
+				var result = JSON.parse(data.data);
+				JobNo=result.data.jobNo;
+				$("#text1").html("工号:"+JobNo);
+			}
+		});
+	}
+	loadUserInfo();
 });

@@ -20,7 +20,7 @@ public class Test {
         UUID uid = UUID.randomUUID();
         int randomNum = (int)(Math.random()*(9999-1000+1))+1000;
         String sas= WXPayUtil.generateNonceStr();
-
+        String v ="";
         double b=10.0;
        int c= Integer.parseInt(new java.text.DecimalFormat("0").format(b));
 
@@ -82,8 +82,6 @@ public class Test {
         System.out.println("結束時間"+df2.format(new Date()));// new Date()为获取当前系统时间
         System.out.println("ellison="+q+">"+w+">"+e+">"+r+">"+t+">"+y);*/
         SimpleDateFormat df2 = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
-
-
         System.out.println("結束時間"+df2.format(new Date()));// new Date()为获取当前系统时间
     }
 
