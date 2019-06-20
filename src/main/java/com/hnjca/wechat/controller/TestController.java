@@ -3,11 +3,13 @@ package com.hnjca.wechat.controller;
 import com.hnjca.wechat.constant.WXConfig;
 import com.hnjca.wechat.constant.WeChatXML;
 import com.hnjca.wechat.constant.WechatAccount;
+import com.hnjca.wechat.enums.InfoEnum;
 import com.hnjca.wechat.pojo.TemplateJson;
 import com.hnjca.wechat.util.SHA1;
 import com.hnjca.wechat.util.TemplateMsgUtil;
 import com.hnjca.wechat.util.Utils;
 import com.hnjca.wechat.util.WxServerUtil;
+import com.hnjca.wechat.vo.ResponseInfo;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -27,6 +29,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Description: 微信公众号测试账号的 基础配置
@@ -166,4 +169,34 @@ public class TestController {
         }
 
     }
-}
+
+    @GetMapping(value = "/demo")
+    public ResponseInfo find() {
+        int sumd = 0;
+        int sumx = 0;
+        String res="";
+            Random ra = new Random();
+            int x = ra.nextInt(6) + 1;
+            int y = ra.nextInt(6) + 1;
+            int z = ra.nextInt(6) + 1;
+            int sum = x + y + z;
+            System.out.println("三个的值分别是" + x + "," + y + "," + z);
+            if (sum >= 3 && sum <= 9) {
+                sumx++;
+
+                System.out.println("三个和为：" + sum + "    小");
+                res=  x + "," + y + "," + z+"——————"+"和为：" + sum + "小";
+                return new ResponseInfo(InfoEnum.SUCCESS,res);
+            }
+            if (sum > 9 && sum <= 18) {
+                sumd++;
+                System.out.println("三个和为：" + sum + "    大");
+                res=x + "," + y + "," + z+"——————"+"和为：" + sum + "大";
+                return new ResponseInfo(InfoEnum.SUCCESS,res);
+
+            }
+        System.out.println("大总数：" + sumd + "小总数：" + sumx);
+            res=  x + "," + y + "," + z+"——————"+"和为：" + sum + "小";
+        return new ResponseInfo(InfoEnum.SUCCESS,res);
+    }
+    }

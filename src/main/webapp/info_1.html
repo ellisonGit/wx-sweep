@@ -861,10 +861,10 @@ var e='';
 				var result = JSON.parse(data.data);
 				if (result.code == "000001") {
 					//alert(result.data.money);
-					$("zhichu").html(result.data.money== null ? 0 : result.data.money);
-					$("chongzhi").html(result.data.remainMoney == null ? 0 : result.data.remainMoney);
+					$("zhichu").html(toDecimal2(result.data.money)== null ? 0 : toDecimal2(result.data.money));
+					$("chongzhi").html(toDecimal2(result.data.remainMoney) == null ? 0 : toDecimal2(result.data.remainMoney));
 				yu=	$(".my_yue span").html(toDecimal2(result.data.remainMoney - result.data.money));//余额
-					e=result.data.remainMoney - result.data.money;
+					e=toDecimal2(result.data.remainMoney - result.data.money);
 					numRunFun(0,e);//动态金额
 				}
 			}

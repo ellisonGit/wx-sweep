@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>com.hnjca</groupId>
-    <artifactId>wechat</artifactId>
+    <artifactId>wxsweep</artifactId>
     <version>1.0</version>
-    <name>wechat</name>
-    <description>微信基础配置</description>
+    <name>wxsweep</name>
+    <description>微信扫码</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -150,6 +150,14 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>7</source>
+                    <target>7</target>
                 </configuration>
             </plugin>
         </plugins>

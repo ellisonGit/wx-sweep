@@ -5,6 +5,7 @@ import com.hnjca.wechat.util.MyConfig;
 import com.hnjca.wechat.util.MyRequestUtil;
 import com.hnjca.wechat.wxUtil.WXPayUtil;
 import com.hnjca.wechat.wxUtil.WXRequestUtil;
+import com.hnjca.wechat.wxsweep.MyWXPay;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,6 +112,20 @@ public class WeixinController {
         }
         // 返回给微信的信息
         return  returnxml;
+    }
+
+    /**
+     * 扫码支付
+     * @param
+     * @return
+     */
+    @GetMapping(value = "/scanCode")
+    public String scanCode(String auth_code) throws Exception {
+        String body= MyWXPay.scanCodeToPay(auth_code);
+       System.out.println(body);
+
+
+        return body;
     }
 
 }
