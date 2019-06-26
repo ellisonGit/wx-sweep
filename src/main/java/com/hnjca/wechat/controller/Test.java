@@ -1,6 +1,8 @@
 package com.hnjca.wechat.controller;
 
 
+import com.hnjca.wechat.wxsweep.BytesHexStrTranslate;
+import com.hnjca.wechat.wxsweep.CRCjiaoyan;
 import com.sun.tools.javac.util.Convert;
 
 import java.io.UnsupportedEncodingException;
@@ -19,12 +21,22 @@ import static java.util.Objects.isNull;
  */
 public class Test {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String no = "6E600400000029D2000001000000905824772000000000020B17000A0091AE";//返回一串十六进制码
-        byte[] arr=str2bytearray("6E600400000029D2000001000000905824772000000000020B17000A0091AE");
-        for (byte b:arr){
-            System.out.print(Integer.toHexString(b & 0xff)+' ');
-        }
-        System.out.println();
+
+        String b="AE0D02110064e147";
+        byte[] d= BytesHexStrTranslate.toBytes(b);//将16进制字符串转换为byte[]
+        System.out.println("截取到的16进制数据:"+b);
+        System.out.println("byte[]数据:"+d);
+
+        int intnum= 500;
+        byte[] dd= toLH(intnum);
+
+        bytesToHexString(dd);
+        System.out.println("大端："+  bytesToHexString(dd));
+        String liu=  String.format("%08x", intnum);//需要使用2字节表示
+
+
+        System.out.println("输出2："+liu);
+        System.out.println("输出3："+  reverseString3(b));
 
      /*   String sum="";
         String mac = "313334353436383639313337313038303936";
@@ -57,6 +69,47 @@ public class Test {
         }
         return intArr;
     }*/
+    }
+    public static byte[] toLH(int n) { byte[] b = new byte[4]; b[0] = (byte) (n & 0xff); b[1] = (byte) (n >> 8 & 0xff); b[2] = (byte) (n >> 16 & 0xff); b[3] = (byte) (n >> 24 & 0xff); return b; }
+
+    public static String bytesToHexString(byte[] src){
+        StringBuilder stringBuilder = new StringBuilder("");
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+        for (int i = 0; i < src.length; i++) {
+            int v = src[i] & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hv);
+        }
+        return stringBuilder.toString();
+    }
+
+    public static byte[] toHH(int n) {
+        byte[] b = new byte[4];
+        b[3] = (byte) (n & 0xff);
+        b[2] = (byte) (n >> 8 & 0xff);
+        b[1] = (byte) (n >> 16 & 0xff);
+        b[0] = (byte) (n >> 24 & 0xff);
+        return b;
+    }
+
+    public static byte[] changeBytes(byte[] a) {
+        byte[] b = new byte[a.length];
+        for (int i = 0; i < b.length; i++) {
+            b[i] = a[b.length - i - 1];
+        }
+        return b;
+    }
+
+    private static String reverseString3(String str) {
+
+        StringBuffer buffer = new StringBuffer(str);
+        return buffer.reverse().toString();
+
     }
     public static byte[] str2bytearray(String str){
         int length=str.length();
