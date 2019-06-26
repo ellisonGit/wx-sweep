@@ -12,25 +12,21 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Scanner;
 
-class UDPPortInfos {
-    public static void main(String[] args)throws IOException{
+ public class UDPPortInfos {
+    public static void UdpportInfos(String ip,int port, byte[] codeMa)throws IOException{
         DatagramSocket client = new DatagramSocket();
-        InetAddress addr = InetAddress.getByName("127.0.0.1");
-        int port = 8002;
+        InetAddress addr = InetAddress.getByName(ip);
+        //int port = 8002;
         byte[] sendBuf;
-        while(true){
-            Scanner sc = new Scanner(System.in);
+        while(true) {
+           /* Scanner sc = new Scanner(System.in);
             System.out.println("请输要发送的内容：");
-            String str  = sc.nextLine();
-            sendBuf = str.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(sendBuf , sendBuf.length , addr , port );
+            String str  = sc.nextLine();*/
+            sendBuf = codeMa;
+            DatagramPacket sendPacket = new DatagramPacket(sendBuf, sendBuf.length, addr, port);
             client.send(sendPacket);
-            if(str.endsWith("q")|| str.endsWith("quit")){
-                break;
-            }
+           break;
         }
-        client.close();
     }
 }

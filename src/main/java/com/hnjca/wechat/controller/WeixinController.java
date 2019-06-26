@@ -120,8 +120,8 @@ public class WeixinController {
      * @return
      */
     @GetMapping(value = "/scanCode")
-    public String scanCode(String auth_code) throws Exception {
-        String body= MyWXPay.scanCodeToPay(auth_code);
+    public static String  scanCode(String auth_code,String money) throws Exception {
+        String body= MyWXPay.scanCodeToPay(auth_code,money);
        System.out.println(body);
 
 

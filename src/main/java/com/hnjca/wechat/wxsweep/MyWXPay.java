@@ -35,7 +35,7 @@ public class MyWXPay {
      *
      * @throws Exception
      */
-    public static String scanCodeToPay(String auth_code) throws Exception {
+    public static String scanCodeToPay(String auth_code,String money) throws Exception {
         MyConfigInfo config = new MyConfigInfo();
         WXPay wxpay = new WXPay(config);
         int randomNum = (int)(Math.random()*(9999-1000+1))+1000;//商户订单号

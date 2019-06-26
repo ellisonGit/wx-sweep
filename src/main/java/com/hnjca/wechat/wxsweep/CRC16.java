@@ -95,22 +95,46 @@ public class CRC16 {
      * @return CRC16校验值
      */
     public static int calcCrc16(byte[] data, int offset, int len, int preval) {
+        System.out.println("preval:"+preval);
         int ucCRCHi = (preval & 0xff00) >> 8;
         int ucCRCLo = preval & 0x00ff;
         int iIndex;
         for (int i = 0; i < len; ++i) {
             iIndex = (ucCRCLo ^ data[offset + i]) & 0x00ff;
-            ucCRCLo = ucCRCHi ^ crc16_tab_h[iIndex];
+           ucCRCLo = ucCRCHi ^ crc16_tab_h[iIndex];
             ucCRCHi = crc16_tab_l[iIndex];
 
         }
         return ((ucCRCHi & 0x00ff) << 8) | (ucCRCLo & 0x00ff) & 0xffff;
     }
 
+
+    public static int CalcCRC16(byte[] pArray, int length) {
+        int wCRC = 0x1021;
+        int CRC_Count = length;
+        int i;
+        int num = 0;
+        while (CRC_Count > 0) {
+            CRC_Count--;
+            wCRC = wCRC ^ (0xFF & pArray[num++]);
+            for (i = 0; i < 8; i++) {
+                if ((wCRC & 0x0001) == 1) {
+                    wCRC = wCRC >> 1 ^ 0xA001;
+                } else {
+                    wCRC = wCRC >> 1;
+                }
+            }
+        }
+        return wCRC;
+    }
+
+
+
+
     // 测试
     public static void main(String[] args) {
         // 0x02 05 00 03 FF 00 , crc16=7C 09
-        int crc = CRC16.calcCrc16(new byte[] { 0x02, 0x05, 0x00, 0x03, (byte) 0xb3da, 0x00 });
+        int crc = CRC16.calcCrc16(new byte[] {(byte)0x1021});
         System.out.println(String.format("0x%04x", crc));
 
     }

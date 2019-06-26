@@ -1,3 +1,4 @@
+/*
 package com.hnjca.wechat.controller;
 
 import com.hnjca.wechat.constant.WXConfig;
@@ -31,23 +32,27 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
+*/
 /**
  * Description: 微信公众号测试账号的 基础配置
  * User: YangYong
  * Date: 2019-03-20
  * Time: 14:43
  * Modified:
- */
+ *//*
+
 @RestController
 @RequestMapping(value = "/test",produces = "application/json;charset=utf-8")
 public class TestController {
 
-    /**
+    */
+/**
      * 微信后台接入得接口地址
      * @param request
      * @param response
      * @throws UnsupportedEncodingException
-     */
+     *//*
+
     @GetMapping(value = "/index")
     public void get(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -115,18 +120,22 @@ public class TestController {
                 return;
             }
 
-            /**
+            */
+/**
              * key 是 click_key1的事件响应
-             */
+             *//*
+
             if(event != null && "click_key1".equals(eventKey)){
                 String result = String.format(WeChatXML.text, fromUsername, toUsername, time,"点我干嘛！");
                 Utils.ajaxPrint(result,response);
                 return;
             }
 
-            /**
+            */
+/**
              * key 是 click_key2的事件响应
-             */
+             *//*
+
             if(event != null && "click_key2".equals(eventKey)){
                 TemplateJson templateJson = new TemplateJson();
                 templateJson.setTouser("o-UFItwnEnikKyHLpHBdutyfJdoU");//oJQ7ajmQhHRN7AyydcYdOQQWgZnk
@@ -200,3 +209,4 @@ public class TestController {
         return new ResponseInfo(InfoEnum.SUCCESS,res);
     }
     }
+*/
