@@ -59,6 +59,7 @@ public class test {
     private static byte[] hexStringToBytes(String str) {
         if (str == null || str.trim().equals("")) {
             return new byte[0];
+
         }
 
         byte[] bytes = new byte[str.length() / 2];

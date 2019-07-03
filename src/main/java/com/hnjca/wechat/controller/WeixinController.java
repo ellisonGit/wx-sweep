@@ -1,6 +1,7 @@
 package com.hnjca.wechat.controller;
 
 import com.hnjca.wechat.pojo.WxMultiRecharge;
+import com.hnjca.wechat.pojo.YYSign;
 import com.hnjca.wechat.util.MyConfig;
 import com.hnjca.wechat.util.MyRequestUtil;
 import com.hnjca.wechat.wxUtil.WXPayUtil;
@@ -26,7 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/weixin",produces = "application/json;charset=utf-8",method = RequestMethod.POST)
-public class WeixinController {
+public class WeixinController  {
     /**
      * 下单
      * @param
@@ -120,7 +121,22 @@ public class WeixinController {
      * @return
      */
     @GetMapping(value = "/scanCode")
-    public static String  scanCode(String auth_code,String money) throws Exception {
+    public static   String  scanCode(String auth_code,String money) throws Exception {
+     /*  new Thread(){
+            @Override
+            public void run() {
+                MyWXPay server = new MyWXPay();
+                try {
+
+
+                   String body= server.scanCodeToPay(auth_code,money);
+
+                   System.out.println("BODY++++++++"+body);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();*/
         String body= MyWXPay.scanCodeToPay(auth_code,money);
        System.out.println(body);
 

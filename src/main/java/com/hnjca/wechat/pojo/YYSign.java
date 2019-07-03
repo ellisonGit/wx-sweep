@@ -15,4 +15,5 @@ public class YYSign {
     private Integer id ;
 
     private Integer sign ;
+
 }

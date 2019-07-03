@@ -1,6 +1,8 @@
 package com.hnjca.wechat;
 
 
+import com.hnjca.wechat.controller.Test;
+import com.hnjca.wechat.task.SocketServer;
 import com.hnjca.wechat.wxsweep.UdpServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -14,10 +16,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class WechatApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         SpringApplication.run(WechatApplication.class, args);
-        UdpServer.Monitor();
-
+        SocketServer.ellison();
+       // UdpServer.Monitor();
     }
+
+
 
 }

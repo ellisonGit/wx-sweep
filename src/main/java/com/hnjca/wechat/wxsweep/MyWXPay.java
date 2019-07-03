@@ -23,19 +23,23 @@ import static com.hnjca.wechat.wxUtil.WXRequestUtil.GetIp;
  * Time: 15:26
  * Modified:
  */
-public class MyWXPay {
+public class MyWXPay extends Thread{
     private static final String PAY_SUCCESS = "SUCCESS";
     private static final String PAY_USERPAYING = "USERPAYING";
 
 
   //  private static Log log = LogFactory.getLog(MyWXPay.class);
 
+
+
     /**
      * 扫码支付
      *
      * @throws Exception
      */
-    public static String scanCodeToPay(String auth_code,String money) throws Exception {
+
+    public static   String scanCodeToPay(String auth_code,String money) throws Exception {
+
         MyConfigInfo config = new MyConfigInfo();
         WXPay wxpay = new WXPay(config);
         int randomNum = (int)(Math.random()*(9999-1000+1))+1000;//商户订单号
@@ -88,7 +92,7 @@ public class MyWXPay {
             return PAY_SUCCESS;
         } else if (PAY_USERPAYING.equals(err_code)) {
             for (int i = 0; i < 4; i++) {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
                 Map<String, String> data = new HashMap<>(16);
                 data.put("out_trade_no", out_trade_no);
                 //调用微信的查询接口
@@ -112,9 +116,13 @@ public class MyWXPay {
                 }
                System.out.println("正在支付" + orderResp);
             }
+            System.out.println("微信支付失败！");
+            return err_code_des;
         } //log.error("微信支付失败！");
         return err_code_des;
     }
+
+
 }
 
 

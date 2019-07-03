@@ -13,11 +13,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
- public class UDPPortInfos {
+ public class UDPPortInfos  {
     public static void UdpportInfos(String ip,int port, byte[] codeMa)throws IOException{
         DatagramSocket client = new DatagramSocket();
         InetAddress addr = InetAddress.getByName(ip);
-        //int port = 8002;
+        //int port = 10068;
         byte[] sendBuf;
         while(true) {
            /* Scanner sc = new Scanner(System.in);
@@ -26,7 +26,7 @@ import java.net.InetAddress;
             sendBuf = codeMa;
             DatagramPacket sendPacket = new DatagramPacket(sendBuf, sendBuf.length, addr, port);
             client.send(sendPacket);
-           break;
+         break;
         }
     }
 }

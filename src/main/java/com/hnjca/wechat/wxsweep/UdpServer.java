@@ -9,20 +9,28 @@ package com.hnjca.wechat.wxsweep;
  */
 
 import com.hnjca.wechat.controller.WeixinController;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Objects.isNull;
-
+@Transactional
 public class UdpServer{
     public static void Monitor() throws Exception {
         DatagramSocket  server = new DatagramSocket(8080);
         byte[] recvBuf = new byte[100];
         DatagramPacket recvPacket = new DatagramPacket(recvBuf, recvBuf.length);
+
         while (true) {
+
+            //server.setSoTimeout(3000);
             server.receive(recvPacket);
+
             byte[] recvStr = recvPacket.getData();
+
             String a=  BytesHexStrTranslate.bytesToHexFun1(recvStr);
             String equipmentNumber= a.substring(6,10);//设备机号数据截取
             System.out.println("设备号："+equipmentNumber);
@@ -51,11 +59,19 @@ public class UdpServer{
             System.out.println("付款码："+sum+">>>金额"+decMoney);
             String res= WeixinController.scanCode(sum,decMoney+"");//调用微信扫码支付
 
-           if(res=="SUCCESS"|| res.equals("SUCCESS")){//微信扫码支付返回
+/*
+            String url = "http://localhost:8080/api/weixin/scanCode";
+            String res = MyRequestUtil.sendPost(url,"auth_code="+sum+"&money="+decMoney);*/
+            System.out.println("结果:"+res);
+
+
+           if(res=="SUCCESS"|| res.equals("SUCCESS")){ //微信扫码支付成功返回
                 byte[] xMoney= toLH(intMoney);//将金额转为小端
                 String sMoney=bytesToHexString(xMoney);
                // String zmoney=  String.format("%08x", decMoney);//金额转需要使用4字节表示
-                String instructions="AE3100"+equipmentNumber+"070D0211";//指令(命令AE+命令码+扣款结果)、
+                String instructions="AE3100"+equipmentNumber+"070D0211";//指令(命令AE+命令码+扣款结果)
+
+               //11：成功，020D：命令码，07：指令长度，equipmentNumber：设备机号数，31:协议控制
                 String dInstrctions="11020D0700"+equipmentNumber+"31AE";//倒叙指令（扣款结果+命令码+AE）
                 String crcMa=instructions+money;//指令+金额
                 System.out.println("指令+金额:"+crcMa);
@@ -79,28 +95,38 @@ public class UdpServer{
                 String ipone=recvPacket.getAddress().toString();//获取ip地址
                 String ip= ipone.substring(1);//格式化ip地址
                 UDPPortInfos.UdpportInfos(ip,recvPacket.getPort(),codeMa);
-            }
+
+            }else{
+               //付款失败
+               byte[] xMoney= toLH(intMoney);//将金额转为小端
+               String sMoney=bytesToHexString(xMoney);
+               // String zmoney=  String.format("%08x", decMoney);//金额转需要使用4字节表示
+               String instructions="AE3100"+equipmentNumber+"070D0210";//指令(命令AE+命令码+扣款结果)
+
+               //11：失败，020D：命令码，07：指令长度，equipmentNumber：设备机号数，31:协议控制
+               String dInstrctions="10020D0700"+equipmentNumber+"31AE";//倒叙指令（扣款结果+命令码+AE）
+               String crcMa=instructions+money;//指令+金额
+               byte[] d=BytesHexStrTranslate.toBytes(crcMa);//将16进制字符串转换为byte[]
+               int intnum= CRCjiaoyan.CRC_XModem(d);//CRC校验
+               String jiaoyan=  String.format("%04x", intnum);//需要使用2字节表示
+               int intJiaoyan = Integer.parseInt(jiaoyan,16);
+               byte[] xJiaoyan= toLH(intJiaoyan);//将校验码转为小端
+               String sJiaoyan=bytesToHexString(xJiaoyan);
+               String jJiaoyan= sJiaoyan.substring(0,4);//数据截取校验码
+               //指令+金额+CRC校验
+               String crcMaJiaoYan=jJiaoyan+sMoney+dInstrctions;
+               System.out.println("检验返回数据："+crcMaJiaoYan);
+               byte[] codeMa=toByteArray(crcMaJiaoYan);//返回一串十六进制码
+               String codeString=bytesToHexString(codeMa);
+               String ipone=recvPacket.getAddress().toString();//获取ip地址
+               String ip= ipone.substring(1);//格式化ip地址
+               System.out.println("ip地址："+ip+"》》》端口号:"+recvPacket.getPort());
+               UDPPortInfos.UdpportInfos(ip,recvPacket.getPort(),codeMa);
+           }
             //server.close();
         }
-           /* int  x = Integer.parseInt(code,16);
-            System.out.println("codetwo:"+x);
-            byte[] d=BytesHexStrTranslate.toBytes(b);//将16进制字符串转换为byte[]
-            System.out.println("截取到的16进制数据:"+b);
-           int c= CRC16.CalcCRC16(d,d.length);*/
-           /* int crc = CRC16.calcCrc16(d);
-              BytesHexStrTranslate.byteToHex(crc);
-            System.out.println("crc16::"+String.format("0x%04x", crc));
-            System.out.println("crc162,:"+ BytesHexStrTranslate.byteToHex(crc));*/
+        }
 
-          /* System.out.println("getAddress:"+recvPacket.getAddress()+"getOffset:"+recvPacket.getOffset()+
-                    " getPort:"+recvPacket.getPort()+"getSocketAddress:"+recvPacket.getSocketAddress());
-           System.out.println("ellison>>>>>>>>>>>"+ recvPacket.getData());
-
-           int crc = CRC16.calcCrc16( recvStr.getBytes().clone() );
-            System.out.println(String.format("0x%04x", crc));
-            if(recvStr.endsWith("q")|| recvStr.endsWith("quit")){
-                break;*/
-            }
 
 
        public static int[] stringConvertInt (String mac){
